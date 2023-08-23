@@ -1,0 +1,123 @@
+import time
+import os
+import random
+
+
+def upgame():
+        global number
+        print("게임시작!")
+        time.sleep(1)
+        os.system("clear")
+        a = random.randint(1, 100)
+        upcount = 1  # 도전횟수!
+        while True:
+            try:
+                number = int(input("100이하로 아무숫자 입력하세요!:"))
+                if number > a:
+                    print("Down"); upcount += 1; continue
+                elif number < a:
+                    print("Up"); upcount += 1; continue
+                elif number == a:
+                    print("정답!", upcount, "회 만에 맞췄어요.")
+                    return uprestart()
+            except:
+                print(f"숫자가 아니네요..\n오직 숫자로만 입력하세요")
+
+def rock():
+    list = '가위', '바위', '보'
+    list_win = {'가위': '바위', '바위': '보', '보': '가위'}
+
+    win = 0
+    lose = 0
+    draw = 0
+    num = int(input("몇번하시겠습니까?"))
+
+    while num > 0:
+        num -= 1
+        i = random.choice(list)
+
+        user = input("안내면 진거 가위바위보!! \n= ")
+
+        if user not in ['가위', '바위', '보']:
+            print("잘못내셨습니다. lose +1")
+            lose += 1
+        elif user == i:
+            print('\033[96m' + '비겼습니다ㅜ' + '\033[0m')
+            draw += 1
+        elif user == list_win[i]:
+            print('\033[96m' + '이겼습니다!!' + '\033[0m')
+            win += 1
+        else:
+            print('\033[96m' + '졌습니다ㅜㅜ' + '\033[0m')
+            lose += 1
+    print("{}승 {}패 {}비김".format(win, lose, draw))
+    return rockrestart()
+
+def uprestart():
+    user_choice = input("게임을 다시 시작할까요? N을 입력하시면 메인화면으로 이동합니다.\n(y/n):")
+    if user_choice.lower() == 'y':
+        print("다시 시작합니다~!")
+        time.sleep(1)
+        os.system("clear")
+        upgame()
+    elif user_choice.lower() == 'n':
+        print("메인화면으로 이동합니다!")
+        time.sleep(1)
+        os.system("clear")
+        Main_page()
+    else:
+        print('\033[31m' + 'y와n으로만 입력해주세여' + '\033[0m')
+        time.sleep(1)
+        return uprestart()
+
+def rockrestart():
+    user_choice = input("게임을 다시 시작할까요? N을 입력하시면 메인화면으로 이동합니다.\n(y/n):")
+    if user_choice.lower() == 'y':
+        print("다시 시작합니다~!")
+        time.sleep(1)
+        os.system("clear")
+        rock()
+    elif user_choice.lower() == 'n':
+        print("메인화면으로 이동합니다!")
+        time.sleep(1)
+        os.system("clear")
+        Main_page()
+    else:
+        print('\033[31m' + 'y와n으로만 입력해주세여' + '\033[0m')
+        time.sleep(1)
+        return rockrestart()
+
+def Main_page():
+    print("환영합니다~!")
+    time.sleep(1.5)
+    os.system("clear")
+
+    while True:
+        print('\t\033[96m' + '게임스' + '\033[0m')
+        time.sleep(0.5)
+        print('\033[96m' + '1.' + '\033[97m' + '업앤다운' + '\033[0m')
+        time.sleep(0.5)
+        print('\033[96m' + '2.' + '\033[97m' + '가위바위보' + '\033[0m')
+        time.sleep(0.5)
+        user_choice = input("= ")
+        if user_choice == '1':
+            print("업앤다운 게임으로 이동합니다!")
+            time.sleep(1)
+            os.system("clear")
+            upgame()
+        elif user_choice == '2':
+            print("가위바위보 게임으로 이동합니다!")
+            time.sleep(1)
+            os.system("clear")
+            rock()
+        else:
+            print('\033[31m' + '원하시는 게임의 번호를 입력하세요' + '\033[0m')
+            time.sleep(2)
+            os.system("clear")
+
+
+
+Main_page()
+
+
+
