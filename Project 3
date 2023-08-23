@@ -1,0 +1,72 @@
+import time
+
+class Member:
+    def __init__(self, name, username, password):
+        self.name = name
+        self.username = username
+        self.password = password
+
+    def display(self):
+        print("Name:", self.name)
+        print("Username:", self.username)
+class Post:
+    def __init__(self, title, content, author):
+        self.title = title
+        self.content = content
+        self.author = author
+
+
+members = [] # 맴버스 리스트 생성ㅇ
+posts = []  # 리스트 생성
+
+# 회원 등록
+def register():
+    print("회원가입을 진행합니다!")
+    name = input("이름을 입력하세요: ")
+    username = input("아이디를 입력하세요: ")
+
+    # 중복 아이디 확인
+    while any(member.username == username for member in members):
+        print("중복된 아이디입니다 다른 아이디를 입력하세요")
+        username = input("다시 입력하세요: ")
+
+    password = input("비밀번호를 입력하세요: ")
+    member = Member(name, username, password)
+    members.append(member)
+    print(f"{name}님, 회원등록이 완료되었습니다!")
+    return member
+
+def create(author):
+    print("게시물을 작성해주세요!")
+    for _ in range(3):  # 3개 게시물
+        title = input("제목을 입력하세요: ")
+        content = input("내용을 입력하세요: ")
+        post = Post(title, content, author)
+        posts.append(post)  # 게시물 리스트에 추가하기
+    return menu()
+
+
+
+def menu():
+    user_choice = input("회원등록하기\n(y/n)= ")
+    if user_choice.lower() == 'y':
+        print("회원등록으로 이동합니다!")
+        time.sleep(1)
+        return register()  # register 함수 호출
+    else:
+        print('\033[31m' + '바이바이' + '\033[0m')
+        time.sleep(1)
+        exit()
+
+menu()
+
+
+for _ in range(2):
+    register()
+
+# 각 회원이 게시글 작성
+for member in members:
+    for _ in range(2):  # 임시로 각  2개의 게시글 작성
+        print(member.name)
+        create(member.username)
+
